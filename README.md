@@ -1,5 +1,4 @@
 📘 AWS RDS (MySQL) – Connect EC2 to Managed Database
-4
 
 This project shows how to create an AWS RDS MySQL database and connect it securely from a Linux EC2 instance.
 
@@ -24,7 +23,8 @@ RDS (MySQL) – Managed Database
 
 🔹 Step 1 — Create MySQL RDS in AWS
 
-Go to AWS Console → RDS → Create Database
+Go to:
+AWS Console → RDS → Create Database
 
 Choose:
 
@@ -52,7 +52,8 @@ RDS Endpoint → <rds-endpoint>.rds.amazonaws.com
 
 🔹 Step 2 — Allow EC2 to Access RDS
 
-Open RDS → Security Group → Inbound Rules
+Go to:
+RDS → Security Group → Inbound Rules
 
 Add:
 
@@ -63,7 +64,7 @@ This allows EC2 to talk to RDS.
 
 🔹 Step 3 — Install MySQL Client on EC2
 
-Login to EC2:
+Login to EC2 and run:
 
 sudo apt-get update
 sudo apt install mysql-client -y
@@ -72,7 +73,7 @@ sudo apt install mysql-client -y
 mysql -h <rds-endpoint> -u admin -P 3306 -p
 
 
-Enter the RDS password.
+Enter the RDS password when prompted.
 
 🔹 Step 5 — Create Database & Table
 
@@ -106,7 +107,7 @@ RDS	Database Server
 Security Groups	Firewall
 MySQL Client	Database Access Tool
 
-This is exactly how real production apps connect to cloud databases.
+This is exactly how real production applications connect to cloud databases.
 
 📄 Resume-Ready Line
 
