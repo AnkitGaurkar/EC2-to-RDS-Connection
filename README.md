@@ -1,7 +1,9 @@
-📘 RDS in AWS – MySQL Connectivity from EC2
+📘 AWS RDS (MySQL) – Connect EC2 to Managed Database
 4
 
-This project demonstrates how an Ubuntu EC2 instance connects securely to a MySQL database hosted on AWS RDS — a standard production cloud architecture.
+This project shows how to create an AWS RDS MySQL database and connect it securely from a Linux EC2 instance.
+
+This is how real production cloud applications connect to managed databases.
 
 ☁️ Cloud Platform
 
@@ -9,69 +11,103 @@ Built on Amazon Web Services
 
 Services used:
 
-EC2 – Ubuntu Server
+EC2 (Ubuntu) – Application Server
 
 RDS (MySQL) – Managed Database
 
 🧩 Architecture
 [ Ubuntu EC2 ]
        |
-       |  MySQL (TCP 3306)
+       |  MySQL (3306)
        |
-[ AWS RDS – MySQL ]
+[ AWS RDS (MySQL) ]
 
-🎯 Objective
+🔹 Step 1 — Create MySQL RDS in AWS
 
-Install MySQL client on EC2
+Go to AWS Console → RDS → Create Database
 
-Connect EC2 to AWS RDS
+Choose:
 
-Verify database access
+Engine: MySQL
 
-🛠️ Step 1 — Install MySQL Client
-sudo apt-get update
-sudo apt install mysql-client -y
+Template: Free Tier
 
-🌐 Step 2 — RDS Endpoint
+DB instance identifier: mydb
 
-(Kept hidden for security)
+Username: admin
 
-Format:
+Password: (your password)
 
-<rds-endpoint>.rds.amazonaws.com
+Public access: No
 
-🔑 Step 3 — Connect to RDS
-mysql -h <rds-endpoint> -u admin -P 3306 -p
+VPC: Same as EC2
 
+Database port: 3306
 
-Enter the password when prompted.
+Click Create Database
 
-🧪 Step 4 — Validate Connection
+After creation, copy:
 
-After login:
+RDS Endpoint → <rds-endpoint>.rds.amazonaws.com
 
-SHOW DATABASES;
+🔹 Step 2 — Allow EC2 to Access RDS
 
+Open RDS → Security Group → Inbound Rules
 
-If databases appear, the connection is successful.
-
-🔐 Step 5 — RDS Security Group
-
-Inbound rule required:
+Add:
 
 Type	Port	Source
 MySQL	3306	EC2 Security Group
 
-This allows secure communication between EC2 and RDS.
+This allows EC2 to talk to RDS.
 
-🧠 What This Project Demonstrates
+🔹 Step 3 — Install MySQL Client on EC2
 
-This setup reflects a real DevOps production model:
+Login to EC2:
 
-Layer	AWS Service
-Application Server	EC2
-Database	RDS
-Security	Security Groups
+sudo apt-get update
+sudo apt install mysql-client -y
+
+🔹 Step 4 — Connect EC2 to RDS
+mysql -h <rds-endpoint> -u admin -P 3306 -p
+
+
+Enter the RDS password.
+
+🔹 Step 5 — Create Database & Table
+
+Inside MySQL:
+
+CREATE DATABASE devopsdb;
+USE devopsdb;
+
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+🔹 Step 6 — Insert & Read Data
+INSERT INTO users VALUES (1,'Ankit');
+SELECT * FROM users;
+
+
+Output:
+
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Ankit |
++----+-------+
+
+🧠 What This Project Proves
+Component	Role
+EC2	Application Server
+RDS	Database Server
+Security Groups	Firewall
+MySQL Client	Database Access Tool
+
+This is exactly how real production apps connect to cloud databases.
+
 📄 Resume-Ready Line
 
-Configured secure EC2-to-RDS MySQL connectivity using AWS networking and Linux MySQL client in a production-grade cloud environment.
+Created AWS RDS MySQL database and configured secure EC2 connectivity, including database creation, user access, and live data operations.
