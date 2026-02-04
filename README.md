@@ -1,8 +1,7 @@
-# EC2-to-RDS-Connection
 📘 RDS in AWS – MySQL Connectivity from EC2
 4
 
-This project demonstrates how an Ubuntu EC2 instance connects securely to a MySQL database hosted on AWS RDS.
+This project demonstrates how an Ubuntu EC2 instance connects securely to a MySQL database hosted on AWS RDS — a standard production cloud architecture.
 
 ☁️ Cloud Platform
 
@@ -25,9 +24,9 @@ RDS (MySQL) – Managed Database
 
 Install MySQL client on EC2
 
-Connect to AWS RDS using endpoint & credentials
+Connect EC2 to AWS RDS
 
-Verify database connectivity
+Verify database access
 
 🛠️ Step 1 — Install MySQL Client
 sudo apt-get update
@@ -35,49 +34,39 @@ sudo apt install mysql-client -y
 
 🌐 Step 2 — RDS Endpoint
 
-For security reasons, the actual RDS endpoint is hidden.
+(Kept hidden for security)
 
 Format:
 
 <rds-endpoint>.rds.amazonaws.com
 
-
-Example:
-
-mydb.xxxxxxxx.us-east-2.rds.amazonaws.com
-
 🔑 Step 3 — Connect to RDS
 mysql -h <rds-endpoint> -u admin -P 3306 -p
 
 
-Enter password when prompted.
+Enter the password when prompted.
 
-❌ Common Mistake (From Lab)
+🧪 Step 4 — Validate Connection
 
-Wrong:
+After login:
 
-mysql -u admin -h <rds-endpoint> -p 3306
+SHOW DATABASES;
 
 
-Correct:
+If databases appear, the connection is successful.
 
-mysql -h <rds-endpoint> -u admin -P 3306 -p
-
-Option	Meaning
--p	Ask for password
--P	Port number
-🔐 Step 4 — RDS Security Group
+🔐 Step 5 — RDS Security Group
 
 Inbound rule required:
 
 Type	Port	Source
 MySQL	3306	EC2 Security Group
 
-Without this, EC2 cannot connect to RDS.
+This allows secure communication between EC2 and RDS.
 
-🧠 What This Proves
+🧠 What This Project Demonstrates
 
-This setup reflects a real production DevOps architecture:
+This setup reflects a real DevOps production model:
 
 Layer	AWS Service
 Application Server	EC2
@@ -85,4 +74,4 @@ Database	RDS
 Security	Security Groups
 📄 Resume-Ready Line
 
-Configured secure EC2-to-RDS MySQL connectivity using AWS networking and Linux MySQL client for cloud-based production workloads.
+Configured secure EC2-to-RDS MySQL connectivity using AWS networking and Linux MySQL client in a production-grade cloud environment.
